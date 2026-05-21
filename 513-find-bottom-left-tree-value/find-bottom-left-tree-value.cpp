@@ -20,17 +20,14 @@ public:
         q.push(root);
         while(!q.empty()){
             int size = q.size();
-            vector<int>level;
+            bottomLeft = q.front()->val;
 
             for(int i=0;i<size;i++){
                 TreeNode* tmp = q.front();
-                level.push_back(tmp->val);
                 if(tmp->left) q.push(tmp->left);
                 if(tmp->right) q.push(tmp->right);
                 q.pop();
             }
-            
-            bottomLeft = level[0];
         }
         return bottomLeft;
     }
