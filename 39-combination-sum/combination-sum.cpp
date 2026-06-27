@@ -10,7 +10,7 @@ public:
         }
 
         combination.push_back(arr[i]);
-        genCombination(arr , combination , target-arr[i] , i+1); //include one time
+        // genCombination(arr , combination , target-arr[i] , i+1); //include one time
         genCombination(arr , combination , target-arr[i] , i); //include many time
         combination.pop_back(); //backtrack
         genCombination(arr , combination , target , i+1); //exclude case
