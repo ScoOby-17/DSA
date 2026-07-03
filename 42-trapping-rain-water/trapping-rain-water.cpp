@@ -2,29 +2,31 @@ class Solution {
 public:
     int trap(vector<int>& height) {
         int n = height.size();
-        vector<int>prefixMax(n);
-        vector<int>suffixMax(n);
-        int pMax=0,sMax=0;
-        int unitCount = 0;
+        vector<int>leftHighest(n);
+        vector<int>rightHighest(n);
 
-        //prefix max
+        int highest = height[0];
         for(int i=0;i<n;i++){
-            pMax = max(pMax , height[i]);
-            prefixMax[i] = pMax;
-        }
-        //suffix max
-        for(int i=n-1;i>=0;i--){
-            sMax = max(sMax,height[i]);
-            suffixMax[i] = sMax;
+            highest = max(height[i] , highest);
+            leftHighest[i] = highest;
         }
 
-        for(int i=1;i<n-1;i++){
-            if(height[i] < prefixMax[i-1] && height[i] < suffixMax[i+1]){
-                int units = min(prefixMax[i-1] , suffixMax[i+1]) - height[i];
-                unitCount += units;
+        highest = height[n-1];
+        for(int i=n-1;i>=0;i--){
+            highest = max(height[i] , highest);
+            rightHighest[i] = highest;
+        }
+
+        int totalUnits=0;
+        for(int i=0;i<n;i++){
+            int curr = height[i];
+            if(curr < rightHighest[i] && curr < leftHighest[i]){
+                int high = min(leftHighest[i] , rightHighest[i]);
+                int unit = high - curr;
+                totalUnits += unit;
             }
         }
 
-        return unitCount;
+        return totalUnits;
     }
 };
