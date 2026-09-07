@@ -1,33 +1,32 @@
 class Solution {
 public:
-    long long calculateHours(vector<int>& piles , int capacity){
+    long long calculateHours(vector<int>& piles , int &capacity){
         long long totalTime = 0;
         for(int i=0;i<piles.size();i++){
-            totalTime+= (piles[i] + capacity - 1) / capacity; //works like ciel fn
+            totalTime += ceil((double)piles[i]/capacity);
         }
         return totalTime;
     }
 
     int minEatingSpeed(vector<int>& piles, int h) {
-        int n = piles.size();
-        int maxV = INT_MIN;
-        for(int i=0;i<n;i++){
-            maxV = max(maxV,piles[i]);
+        int s=1,e=0;
+        //find range of start and end
+        for(int i=0;i<piles.size();i++){
+            e = max(e , piles[i]);
         }
+        int ans = 1;
 
-        int i=1;
-        int j=maxV;
-        int ans=1;
-        while(i<=j){
-            int mid = i+(j-i)/2;
-            long long totalTime = calculateHours(piles,mid);
-            if(totalTime<=h){
-                ans = mid;
-                j=mid-1;
+        while(s<=e){
+            int m = s+(e-s)/2;
+            long long totalTime = calculateHours(piles , m);
+            if(totalTime <= h){
+                ans = m;
+                e=m-1;
             }else{
-                i=mid+1;
+                s=m+1;
             }
         }
+
         return ans;
     }
 };
